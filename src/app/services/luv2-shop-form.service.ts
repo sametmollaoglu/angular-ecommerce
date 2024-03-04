@@ -4,41 +4,37 @@ import { HttpClient } from '@angular/common/http';
 import { Country } from '../common/country';
 import { map } from 'rxjs/operators';
 import { State } from '../common/state';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class Luv2ShopFormService {
+  private countriesUrl = environment.luv2shopApiUrl + '/countries';
+  private statesUrl = environment.luv2shopApiUrl + '/states';
 
-  private countriesUrl = 'http://localhost:8080/api/countries';
-  private statesUrl = 'http://localhost:8080/api/states';
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   getCountries(): Observable<Country[]> {
-
-    return this.httpClient.get<GetResponseCountries>(this.countriesUrl).pipe(
-      map(response => response._embedded.countries)
-    );
+    return this.httpClient
+      .get<GetResponseCountries>(this.countriesUrl)
+      .pipe(map((response) => response._embedded.countries));
   }
 
   getStates(theCountryCode: string): Observable<State[]> {
-
     // search url
     const searchStatesUrl = `${this.statesUrl}/search/findByCountryCode?code=${theCountryCode}`;
 
-    return this.httpClient.get<GetResponseStates>(searchStatesUrl).pipe(
-      map(response => response._embedded.states)
-    );
+    return this.httpClient
+      .get<GetResponseStates>(searchStatesUrl)
+      .pipe(map((response) => response._embedded.states));
   }
 
-
   getCreditCardMonths(startMonth: number): Observable<number[]> {
-
     let data: number[] = [];
-    
+
     // build an array for "Month" dropdown list
-    // - start at current month and loop until 
+    // - start at current month and loop until
 
     for (let theMonth = startMonth; theMonth <= 12; theMonth++) {
       data.push(theMonth);
@@ -48,12 +44,11 @@ export class Luv2ShopFormService {
   }
 
   getCreditCardYears(): Observable<number[]> {
-
     let data: number[] = [];
 
     // build an array for "Year" downlist list
     // - start at current year and loop for next 10 years
-    
+
     const startYear: number = new Date().getFullYear();
     const endYear: number = startYear + 10;
 
@@ -63,17 +58,16 @@ export class Luv2ShopFormService {
 
     return of(data);
   }
-
 }
 
 interface GetResponseCountries {
   _embedded: {
     countries: Country[];
-  }
+  };
 }
 
 interface GetResponseStates {
   _embedded: {
     states: State[];
-  }
+  };
 }
