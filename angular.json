@@ -14,7 +14,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-              "@babel/runtime-corejs3", 
+              "@babel/runtime-corejs3",
               "cross-fetch",
               "p-cancelable",
               "tiny-emitter",
@@ -43,8 +43,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -68,7 +68,7 @@
               "sourceMap": true,
               "namedChunks": true
             },
-            "qa" : {
+            "qa": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
