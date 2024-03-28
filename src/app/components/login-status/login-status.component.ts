@@ -43,8 +43,9 @@ export class LoginStatusComponent implements OnInit {
     }
   }
 
-  logout() {
+  async logout() {
     // Terminates the session with Okta and removes current tokens.
-    this.oktaAuth.signOut();
+    // await this.oktaAuth.signOut();
+    await this.oktaAuth.signOut({postLogoutRedirectUri: `https://localhost:8443/angular-ecommerce/`});
   }
 }
